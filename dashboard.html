@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.3) 0%, transparent 50%);
+  z-index: -1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+h1 {
+  font-size: 42px;
+  color: white;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+.welcome-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.user-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 20px;
+  border-radius: 50px;
+  margin-top: 15px;
+  color: white;
+  font-weight: 500;
+}
+
+.user-info i {
+  color: #ffcc00;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  animation: slideUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.dashboard-card:nth-child(1) { animation-delay: 0.2s; }
+.dashboard-card:nth-child(2) { animation-delay: 0.4s; }
+
+.dashboard-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.card-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  font-size: 36px;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-title {
+  font-size: 26px;
+  color: white;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.card-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  max-width: 280px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 200px;
+  padding: 16px 25px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-explore {
+  background: linear-gradient(to right, #00b09b, #96c93d);
+  color: white;
+}
+
+.btn-predict {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.logout-container {
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 50, 50, 0.2);
+  color: #ff9999;
+  border: 2px solid rgba(255, 100, 100, 0.3);
+  padding: 14px 30px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.logout-btn:hover {
+  background: rgba(255, 50, 50, 0.3);
+  color: #ffcccc;
+  border-color: rgba(255, 100, 100, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(255, 50, 50, 0.2);
+}
+
+/* Decorative elements */
+.floating-element {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: -1;
+}
+
+.floating-1 {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: -150px;
+}
+
+.floating-2 {
+  width: 200px;
+  height: 200px;
+  bottom: -100px;
+  left: -100px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  h1 {
+    font-size: 32px;
+  }
+  
+  .dashboard-card {
+    min-height: 250px;
+    padding: 30px 20px;
+  }
+  
+  .card-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
+  }
+}
+
+/* Stats section */
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 20px;
+  min-width: 180px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="floating-element floating-1"></div>
+  <div class="floating-element floating-2"></div>
+  
+  <div class="container">
+    <header>
+      <h1>Dashboard</h1>
+      <p class="welcome-text">Welcome to your analytics dashboard</p>
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i>
+        <span>Welcome, User!</span>
+      </div>
+    </header>
+    
+    <!-- Stats Section -->
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-value">1,248</div>
+        <div class="stat-label">Data Points</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">24</div>
+        <div class="stat-label">Models Trained</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">94.7%</div>
+        <div class="stat-label">Accuracy Score</div>
+      </div>
+    </div>
+    
+    <div class="dashboard-grid">
+      <div class="dashboard-card">
+        <div class="card-icon">
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <h3 class="card-title">Data Explore</h3>
+        <p class="card-description">
+          Analyze and visualize your data with interactive charts and detailed insights.
+        </p>
+        <a href="/explore" class="btn btn-explore">
+          <i class="fas fa-external-link-alt"></i> Explore Data
+        </a>
+      </div>
+      
+      <div class="dashboard-card">
+        <div class="card-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="card-title">Prediction</h3>
+        <p class="card-description">
+          Use trained models to make predictions and generate forecasts based on your data.
+        </p>
+        <a href="/predict" class="btn btn-predict">
+          <i class="fas fa-rocket"></i> Make Prediction
+        </a>
+      </div>
+    </div>
+    
+    <div class="logout-container">
+      <a href="/logout" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Add interactive animations
+    document.querySelectorAll('.dashboard-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.card-icon');
+        icon.style.transform = 'scale(1.1)';
+        icon.style.background = 'rgba(255, 255, 255, 0.2)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.card-icon');
+        icon.style.transform = 'scale(1)';
+        icon.style.background = 'rgba(255, 255, 255, 0.15)';
+      });
+    });
+    
+    // Add button click animations
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('mousedown', function() {
+        this.style.transform = 'scale(0.95)';
+      });
+      
+      btn.addEventListener('mouseup', function() {
+        this.style.transform = 'scale(1)';
+      });
+    });
+    
+    // Animate stats on page load
+    const statValues = document.querySelectorAll('.stat-value');
+    statValues.forEach(stat => {
+      const originalText = stat.textContent;
+      stat.textContent = '0';
+      
+      setTimeout(() => {
+        let current = 0;
+        const target = parseInt(originalText.replace(/,/g, ''));
+        const increment = target / 30;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          stat.textContent = Math.floor(current).toLocaleString();
+        }, 50);
+      }, 800);
+    });
+  </script>
+</body>
+</html>

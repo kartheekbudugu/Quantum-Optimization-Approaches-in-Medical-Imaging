@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Matching gradient background */
+  background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+  padding: 20px;
+}
+
+.box {
+  width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  padding-left: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-size: 16px;
+  color: white;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(to right, #00b09b, #96c93d);
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  letter-spacing: 1px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background: linear-gradient(to right, #96c93d, #00b09b);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.login-link {
+  margin-top: 25px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.login-link a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.login-link a:hover {
+  color: #ffdd44;
+  text-decoration: underline;
+}
+
+.flash-message {
+  background: rgba(255, 50, 50, 0.2);
+  border-left: 4px solid #ff5555;
+  padding: 12px;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-align: left;
+  animation: fadeIn 0.5s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flash-message.success {
+  background: rgba(50, 255, 100, 0.2);
+  border-left: 4px solid #55ff88;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Decorative elements */
+.decorative-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.circle-1 {
+  width: 100px;
+  height: 100px;
+  top: -40px;
+  left: -40px;
+}
+
+.circle-2 {
+  width: 70px;
+  height: 70px;
+  bottom: -25px;
+  right: -25px;
+}
+
+.password-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 5px;
+  padding-left: 5px;
+}
+
+@media (max-width: 480px) {
+  .box {
+    padding: 30px 20px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  input, button {
+    padding: 14px;
+  }
+}
+
+/* Add some animation for the form */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+  animation: slideUp 0.5s ease forwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="box">
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+    
+    <h2>Create Account</h2>
+    <p class="subtitle">Join our community and get started</p>
+    
+    <form method="post">
+      <div class="form-group">
+        <label for="username"><i class="fas fa-user"></i> Username</label>
+        <div class="icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <input type="text" id="username" name="username" placeholder="Choose a username" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password"><i class="fas fa-key"></i> Password</label>
+        <div class="icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <input type="password" id="password" name="password" placeholder="Create a secure password" required>
+        <p class="password-hint">Use at least 8 characters with a mix of letters, numbers & symbols</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirm-password"><i class="fas fa-key"></i> Confirm Password</label>
+        <div class="icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter your password" required>
+      </div>
+      
+      <button type="submit">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </form>
+    
+    <div class="login-link">
+      <span>Already have an account?</span>
+      <a href="/">
+        <i class="fas fa-sign-in-alt"></i> Back to Login
+      </a>
+    </div>
+    
+    <!-- Flash messages will appear here -->
+    {% for msg in get_flashed_messages() %}
+    <div class="flash-message {% if 'success' in msg %}success{% endif %}">
+      <i class="fas {% if 'success' in msg %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i> 
+      {{msg}}
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    // Add focus effects to input fields
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.querySelector('.icon').style.color = '#ffcc00';
+        this.parentElement.querySelector('label').style.color = '#ffcc00';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.querySelector('.icon').style.color = 'rgba(255, 255, 255, 0.7)';
+        this.parentElement.querySelector('label').style.color = 'rgba(255, 255, 255, 0.9)';
+      });
+    });
+    
+    // Form validation for password confirmation
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm-password');
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(e) {
+      if (password.value !== confirmPassword.value) {
+        e.preventDefault();
+        confirmPassword.style.borderColor = '#ff5555';
+        confirmPassword.style.boxShadow = '0 0 10px rgba(255, 85, 85, 0.5)';
+        
+        // Show error message
+        let errorMsg = document.querySelector('.password-error');
+        if (!errorMsg) {
+          errorMsg = document.createElement('p');
+          errorMsg.className = 'flash-message password-error';
+          errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Passwords do not match';
+          form.insertBefore(errorMsg, document.querySelector('button'));
+        }
+      }
+    });
+    
+    // Clear error when user starts typing
+    confirmPassword.addEventListener('input', function() {
+      if (this.style.borderColor === 'rgb(255, 85, 85)') {
+        this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        this.style.boxShadow = 'none';
+        const errorMsg = document.querySelector('.password-error');
+        if (errorMsg) {
+          errorMsg.remove();
+        }
+      }
+    });
+    
+    // Button animation
+    const registerBtn = document.querySelector('button');
+    registerBtn.addEventListener('mousedown', function() {
+      this.style.transform = 'scale(0.98)';
+    });
+    
+    registerBtn.addEventListener('mouseup', function() {
+      this.style.transform = 'scale(1)';
+    });
+  </script>
+</body>
+</html>
